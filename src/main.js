@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import VueCompositionAPI from '@vue/composition-api'
+import { provide } from '@vue/composition-api'
+import { DefaultApolloClient } from '@vue/apollo-composable'
 
 import VueApollo from "vue-apollo";
 
@@ -35,13 +37,15 @@ const getHeaders = () => {
    })
  });
 
-const apolloProvider = new VueApollo({
-  defaultClient: client,
-})
+// const apolloProvider = new VueApollo({
+//   defaultClient: client,
+// })
 
 new Vue({
   router,
-  apolloProvider,
+  setup () {
+    provide(DefaultApolloClient, client)
+  },
   store,
   render: h => h(App)
 }).$mount("#app");
